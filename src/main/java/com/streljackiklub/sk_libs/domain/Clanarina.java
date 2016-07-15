@@ -5,6 +5,8 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,6 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "clanarina")
 @XmlRootElement
+@JsonSerialize
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NamedQueries({
     @NamedQuery(name = "Clanarina.findAll", query = "SELECT c FROM Clanarina c"),
     @NamedQuery(name = "Clanarina.findByClanID", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanID = :clanID ORDER BY c.datumDo DESC"),

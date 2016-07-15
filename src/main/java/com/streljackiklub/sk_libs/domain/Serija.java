@@ -5,6 +5,8 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -24,6 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "serija")
 @XmlRootElement
+@JsonSerialize
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NamedQueries({
     @NamedQuery(name = "Serija.findAll", query = "SELECT s FROM Serija s"),
     @NamedQuery(name = "Serija.findByTreningID", query = "SELECT s FROM Serija s WHERE s.serijaPK.treningID = :treningID"),

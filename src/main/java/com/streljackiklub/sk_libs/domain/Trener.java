@@ -5,7 +5,11 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -27,6 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "trener")
 @XmlRootElement
+@JsonSerialize@JsonInclude(JsonInclude.Include.NON_NULL)
+
 @NamedQueries({
     @NamedQuery(name = "Trener.findAll", query = "SELECT t FROM Trener t"),
     @NamedQuery(name = "Trener.findByTrenerID", query = "SELECT t FROM Trener t WHERE t.trenerID = :trenerID"),
@@ -66,9 +72,11 @@ public class Trener implements Serializable {
     private List<Trening> treningList;
 
     public Trener() {
+        treningList = new ArrayList<>();
     }
 
     public Trener(Integer trenerID) {
+        this();
         this.trenerID = trenerID;
     }
 
@@ -157,9 +165,14 @@ public class Trener implements Serializable {
         return true;
     }
 
+//    @Override
+//    public String toString() {
+//        return ime + " " + prezime;
+//    }
     @Override
     public String toString() {
-        return ime + " " + prezime;
+        return "Trener{" + "trenerID=" + trenerID + ", jmbg=" + jmbg + ", ime=" + ime + ", prezime=" + prezime + ", licencaTrenera=" + licencaTrenera + ", korisnickoIme=" + korisnickoIme + ", sifra=" + sifra + ", treningList=" + treningList + '}';
     }
+    
     
 }

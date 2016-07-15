@@ -5,6 +5,8 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "trening")
 @XmlRootElement
+@JsonSerialize
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NamedQueries({
     @NamedQuery(name = "Trening.findAll", query = "SELECT t FROM Trening t ORDER BY t.datum DESC"),
     @NamedQuery(name = "Trening.findByTreningID", query = "SELECT t FROM Trening t WHERE t.treningID = :treningID"),
