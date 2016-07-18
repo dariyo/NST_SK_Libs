@@ -98,6 +98,7 @@ public class Clan implements Serializable {
     }
 
     public Clan(Integer clanID) {
+        this();
         this.clanID = clanID;
     }
 

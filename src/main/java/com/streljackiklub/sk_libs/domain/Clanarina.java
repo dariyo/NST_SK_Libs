@@ -5,6 +5,7 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
@@ -52,6 +53,7 @@ public class Clanarina implements Serializable {
     private Double iznos;
     @JoinColumn(name = "clanID", referencedColumnName = "clanID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Clan clan;
 
     public Clanarina() {
