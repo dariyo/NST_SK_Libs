@@ -1,6 +1,8 @@
 package transfer;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -19,8 +21,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonSerialize
 public class TransferObjekat<T extends Object> {
     
+    @JsonView(View.Normal.class)
     private T objekat;
+    
+    @JsonView(View.Normal.class)
     private int status;
+    
+    @JsonView(View.Normal.class)
     private String error;
     
     public final static int SUCCESS = 1;

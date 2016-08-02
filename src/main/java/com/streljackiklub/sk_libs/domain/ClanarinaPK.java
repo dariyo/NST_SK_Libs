@@ -5,6 +5,8 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,13 +19,17 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class ClanarinaPK implements Serializable {
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "clanID")
+    @JsonView(View.Normal.class)
     private int clanID;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "clanarinaID")
+    @JsonView(View.Normal.class)
     private int clanarinaID;
 
     public ClanarinaPK() {

@@ -6,7 +6,9 @@
 package com.streljackiklub.sk_libs.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,24 +46,40 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Trening.findByTrajanjeTreninga", query = "SELECT t FROM Trening t WHERE t.trajanjeTreninga = :trajanjeTreninga"),
     @NamedQuery(name = "Trening.findByClanId", query = "SELECT t FROM Trening t WHERE t.clan.clanID = :clanID ORDER BY t.datum DESC")})
 public class Trening implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "treningID")
+    @JsonView(View.Normal.class)
     private Integer treningID;
+    
     @Column(name = "datum")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonView(View.Normal.class)
     private Date datum;
+    
     @Column(name = "trajanjeTreninga")
+    @JsonView(View.Normal.class)
     private Integer trajanjeTreninga;
+    
+//    @JsonManagedReference
     @JoinColumn(name = "clan", referencedColumnName = "clanID")
     @ManyToOne
+    @JsonView(View.ExtendedTrening.class)
     private Clan clan;
+    
+//    @JsonManagedReference
     @JoinColumn(name = "trener", referencedColumnName = "trenerID")
     @ManyToOne
+    @JsonView(View.ExtendedTrening.class)
     private Trener trener;
+    
+//    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trening")
+    @JsonView(View.Normal.class)
     private List<DeoTreninga> deoTreningaList;
 
     public Trening() {

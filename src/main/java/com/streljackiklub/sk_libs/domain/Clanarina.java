@@ -5,9 +5,10 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,24 +37,33 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Clanarina.findByClanID", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanID = :clanID ORDER BY c.datumDo DESC"),
     @NamedQuery(name = "Clanarina.findByClanarinaID", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanarinaID = :clanarinaID"),
     @NamedQuery(name = "Clanarina.findByDatumDo", query = "SELECT c FROM Clanarina c WHERE c.datumDo = :datumDo"),
-    @NamedQuery(name = "Clanarina.findByClanIDAndDatumDo", query = "SELECT c FROM Clanarina c WHERE c.clan.clanID = :clanID AND c.datumDo = :datumDo"),
+    @NamedQuery(name = "Clanarina.findByClanIDAndDatumDo", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanID = :clanID AND c.datumDo = :datumDo"),
     @NamedQuery(name = "Clanarina.findByIznos", query = "SELECT c FROM Clanarina c WHERE c.iznos = :iznos")})
 public class Clanarina implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
+    @JsonView(View.Normal.class)
     protected ClanarinaPK clanarinaPK;
+    
 //    @Column(name = "datumOd")
 //    @Temporal(TemporalType.TIMESTAMP)
 //    private Date datumOd;
+    
     @Column(name = "datumDo")
     @Temporal(TemporalType.DATE)
+    @JsonView(View.Normal.class)
     private Date datumDo;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "iznos")
+    @JsonView(View.Normal.class)
     private Double iznos;
+    
     @JoinColumn(name = "clanID", referencedColumnName = "clanID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
+    @JsonView(View.ExtendedClanarina.class)
     private Clan clan;
 
     public Clanarina() {

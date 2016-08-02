@@ -5,9 +5,15 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +22,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -56,39 +63,52 @@ public class Clan implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "clanID")
+    @JsonView(View.Normal.class)
     private Integer clanID;
     @Size(max = 13)
     @Column(name = "jmbg")
+    @JsonView(View.Normal.class)
     private String jmbg;
     @Size(max = 30)
     @Column(name = "ime")
+    @JsonView(View.Normal.class)
     private String ime;
     @Size(max = 30)
     @Column(name = "prezime")
+    @JsonView(View.Normal.class)
     private String prezime;
     @Column(name = "datumRodjenja")
     @Temporal(TemporalType.DATE)
+    @JsonView(View.Normal.class)
     private Date datumRodjenja;
     @Column(name = "datumUclanjenja")
     @Temporal(TemporalType.DATE)
+    @JsonView(View.Normal.class)
     private Date datumUclanjenja;
     @Size(max = 30)
     @Column(name = "kategorija")
+    @JsonView(View.Normal.class)
     private String kategorija;
     @Size(max = 50)
     @Column(name = "oruzje")
+    @JsonView(View.Normal.class)
     private String oruzje;
     @Size(max = 10)
     @Column(name = "licencaStrelca")
+    @JsonView(View.Normal.class)
     private String licencaStrelca;
     @Size(max = 15)
     @Column(name = "telefon")
+    @JsonView(View.Normal.class)
     private String telefon;
+//    @JsonBackReference
     @OneToMany(mappedBy = "clan")
     @OrderBy("datum DESC")
+    @JsonView(View.ExtendedClan.class)
     private List<Trening> treningList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clan")
     @OrderBy("datumDo DESC")
+    @JsonView(View.ExtendedClan.class)
     private List<Clanarina> clanarinaList;
 
     public Clan() {

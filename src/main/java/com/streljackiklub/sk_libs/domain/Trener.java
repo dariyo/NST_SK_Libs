@@ -5,15 +5,19 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "trener")
 @XmlRootElement
-@JsonSerialize@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize
+@JsonInclude(JsonInclude.Include.NON_NULL)
 
 @NamedQueries({
     @NamedQuery(name = "Trener.findAll", query = "SELECT t FROM Trener t"),
@@ -44,31 +49,49 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Trener.findByKorisnickoImeAndSifra", query = "SELECT t FROM Trener t WHERE t.korisnickoIme = :korisnickoIme AND t.sifra = :sifra"),
     @NamedQuery(name = "Trener.findBySifra", query = "SELECT t FROM Trener t WHERE t.sifra = :sifra")})
 public class Trener implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "trenerID")
+    @JsonView(View.Normal.class)
     private Integer trenerID;
+    
     @Size(max = 13)
     @Column(name = "jmbg")
+    @JsonView(View.Normal.class)
     private String jmbg;
+    
     @Size(max = 30)
     @Column(name = "ime")
+    @JsonView(View.Normal.class)
     private String ime;
+    
     @Size(max = 30)
     @Column(name = "prezime")
+    @JsonView(View.Normal.class)
     private String prezime;
+    
     @Size(max = 10)
     @Column(name = "licencaTrenera")
+    @JsonView(View.Normal.class)
     private String licencaTrenera;
+    
     @Size(max = 20)
     @Column(name = "korisnickoIme")
+    @JsonView(View.Normal.class)
     private String korisnickoIme;
+    
     @Size(max = 20)
     @Column(name = "sifra")
+    @JsonView(View.Normal.class)
     private String sifra;
+    
+//    @JsonBackReference
     @OneToMany(mappedBy = "trener")
+    @JsonView(View.ExtendedTrener.class)
     private List<Trening> treningList;
 
     public Trener() {

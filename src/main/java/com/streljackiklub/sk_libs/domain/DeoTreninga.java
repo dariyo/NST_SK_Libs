@@ -5,8 +5,12 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,25 +49,43 @@ import javax.xml.bind.annotation.XmlTransient;
 public class DeoTreninga implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
+    @JsonView(View.Normal.class)
     protected DeoTreningaPK deoTreningaPK;
+    
     @Size(max = 250)
     @Column(name = "opis")
+    @JsonView(View.Normal.class)
     private String opis;
+    
     @Size(max = 250)
     @Column(name = "dodatniOpis")
+    @JsonView(View.Normal.class)
     private String dodatniOpis;
+    
     @Column(name = "brojSerija")
+    @JsonView(View.Normal.class)
     private Integer brojSerija;
+    
     @Column(name = "velicinaSerije")
+    @JsonView(View.Normal.class)
     private Integer velicinaSerije;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "rezultat")
+    @JsonView(View.Normal.class)
     private Double rezultat;
+    
+//    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deoTreninga")
+    @JsonView(View.Normal.class)
     private List<Serija> serijaList;
+    
+//    @JsonBackReference
     @JoinColumn(name = "treningID", referencedColumnName = "treningID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonView(View.ExtendedDeoTrening.class)
     private Trening trening;
 
     public DeoTreninga() {

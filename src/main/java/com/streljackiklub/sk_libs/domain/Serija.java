@@ -5,8 +5,11 @@
  */
 package com.streljackiklub.sk_libs.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.streljackiklub.sk_libs.json_view.View;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -35,18 +38,26 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Serija.findBySerijaID", query = "SELECT s FROM Serija s WHERE s.serijaPK.serijaID = :serijaID"),
     @NamedQuery(name = "Serija.findByRezultatSerije", query = "SELECT s FROM Serija s WHERE s.rezultatSerije = :rezultatSerije")})
 public class Serija implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
+    @JsonView(View.Normal.class)
     protected SerijaPK serijaPK;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "rezultatSerije")
+    @JsonView(View.Normal.class)
     private Double rezultatSerije;
+    
+//    @JsonBackReference
     @JoinColumns({
         @JoinColumn(name = "treningID", referencedColumnName = "treningID", insertable = false, updatable = false),
         @JoinColumn(name = "deoTreningaID", referencedColumnName = "deotreningaID", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
+    @JsonView(View.ExtendedSerija.class)
     private DeoTreninga deoTreninga;
-
+    
     public Serija() {
         rezultatSerije = null;
     }
