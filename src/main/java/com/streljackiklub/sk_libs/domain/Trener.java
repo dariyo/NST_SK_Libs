@@ -61,7 +61,7 @@ public class Trener implements Serializable {
     
     @Size(max = 13)
     @Column(name = "jmbg")
-    @JsonView(View.Normal.class)
+    @JsonView(View.SecurityTrener.class)
     private String jmbg;
     
     @Size(max = 30)
@@ -86,7 +86,7 @@ public class Trener implements Serializable {
     
     @Size(max = 20)
     @Column(name = "sifra")
-    @JsonView(View.Normal.class)
+    @JsonView(View.SecurityTrener.class)
     private String sifra;
     
 //    @JsonBackReference
@@ -188,14 +188,14 @@ public class Trener implements Serializable {
         return true;
     }
 
-//    @Override
-//    public String toString() {
-//        return ime + " " + prezime;
-//    }
     @Override
     public String toString() {
-        return "Trener{" + "trenerID=" + trenerID + ", jmbg=" + jmbg + ", ime=" + ime + ", prezime=" + prezime + ", licencaTrenera=" + licencaTrenera + ", korisnickoIme=" + korisnickoIme + ", sifra=" + sifra + ", treningList=" + treningList + '}';
+        return ime + " " + prezime;
     }
+//    @Override
+//    public String toString() {
+//        return "Trener{" + "trenerID=" + trenerID + ", jmbg=" + jmbg + ", ime=" + ime + ", prezime=" + prezime + ", licencaTrenera=" + licencaTrenera + ", korisnickoIme=" + korisnickoIme + ", sifra=" + sifra + ", treningList=" + treningList + '}';
+//    }
     
     
 }

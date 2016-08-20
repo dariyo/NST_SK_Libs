@@ -31,9 +31,9 @@ public class View {
     
     public static class ExtendedTrener extends Normal {
     }
-//    
-//    public static class ExtendedTrening extends Normal {
-//    }
+    
+    public static class SecurityTrener extends Normal {
+    }
 //    
 //    public static class ExtendedTrening extends Normal {
 //    }

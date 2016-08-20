@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Clanarina.findByClanID", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanID = :clanID ORDER BY c.datumDo DESC"),
     @NamedQuery(name = "Clanarina.findByClanarinaID", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanarinaID = :clanarinaID"),
     @NamedQuery(name = "Clanarina.findByDatumDo", query = "SELECT c FROM Clanarina c WHERE c.datumDo = :datumDo"),
-    @NamedQuery(name = "Clanarina.findByClanIDAndDatumDo", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanID = :clanID AND c.datumDo = :datumDo"),
+    @NamedQuery(name = "Clanarina.findByClanIDAndDatumDo", query = "SELECT c FROM Clanarina c WHERE c.clanarinaPK.clanID = ?1 AND c.datumDo = ?2"),
     @NamedQuery(name = "Clanarina.findByIznos", query = "SELECT c FROM Clanarina c WHERE c.iznos = :iznos")})
 public class Clanarina implements Serializable {
     
